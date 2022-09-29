@@ -32,7 +32,7 @@ const Home = () => {
       })
       .catch(() => {
         // Redirect to login page
-        return router.push(edgeConfig.basePath + "/ui/login");
+        return router.push(edgeConfig.basePath + "/self-service/login/browser");
       });
   });
 
