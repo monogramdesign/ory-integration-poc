@@ -23,7 +23,6 @@ const Home = () => {
       .then(({ data }) => {
         // User has a session!
         setSession(data);
-        console.log(data);
 
         return ory
           .createSelfServiceLogoutFlowUrlForBrowsers()
