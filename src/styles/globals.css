@@ -6,4 +6,7 @@
     html {
         font-family: Inter, serif;
     }
+    button {
+        @apply border-2 p-3 rounded-md bg-pink-500 text-white text-base
+    }
 }
