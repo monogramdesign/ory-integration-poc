@@ -16,8 +16,8 @@ const Profile = () => {
   const goToHome = () => router.back();
 
   return (
-    <main className=" px-80 py-10">
-      <div className="border-2 rounded-md p-20 bg-white">
+    <main className=" p-2 lg:px-80 lg:py-10">
+      <div className="border-2 rounded-md p-10 lg:p-20 bg-white">
         <h1 className="text-2xl font-bold text-blue-700">Profile Info</h1>
         <div className="my-10 border-2 p-4 rounded-md">
           <label className="mt-10 font-semibold text-xl">Email:</label>

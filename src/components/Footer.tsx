@@ -13,7 +13,7 @@ const getUserName = (identity: Identity) =>
 
 const Footer = () => {
   return (
-    <footer className="absolute bottom-0 text-center p-4">
+    <footer className="p-2 lg:p-4 lg:absolute lg:bottom-0">
       <a
         href="https://www.ory.sh/docs/welcome"
         target="_blank"

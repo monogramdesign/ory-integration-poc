@@ -16,8 +16,8 @@ const Home = () => {
     router.push(edgeConfig.basePath + "/self-service/verification/browser");
 
   return (
-    <main className=" px-80 py-10">
-      <div className="border-2 rounded-md p-20 bg-white">
+    <main className=" p-2 lg:px-80 lg:py-10">
+      <div className="border-2 rounded-md p-10 lg:p-20 bg-white">
         <h1 className="text-2xl font-bold text-blue-700">Hi {user?.email}</h1>
 
         <p className="my-10">
