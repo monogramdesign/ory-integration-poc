@@ -5,6 +5,7 @@
 @layer base {
     html {
         font-family: Inter, serif;
+        background-color: #f8f8f8;
     }
     button {
         @apply border-2 p-3 rounded-md bg-pink-500 text-white text-base
