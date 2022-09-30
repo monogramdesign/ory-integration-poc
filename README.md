@@ -8,9 +8,7 @@ First, create a .env file in the root of the project and add the following varia
 ORY_SDK_URL=https://{your-project-slug-here}projects.oryapis.com
 ```
 
-Then, install dependencies, and run the development server
-
-run the development server:
+Then, install dependencies, and run the development server:
 
 ```bash
 yarn install
