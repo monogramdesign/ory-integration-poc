@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { NextRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 // A small function to help us deal with errors coming from fetching a flow.
 export function handleGetFlowError<S>(
@@ -10,6 +10,7 @@ export function handleGetFlowError<S>(
   resetFlow: Dispatch<SetStateAction<S | undefined>>
 ) {
   return async (err: AxiosError) => {
+    console.log("adsad", err);
     switch (err.response?.data.error?.id) {
       case "session_aal2_required":
         // 2FA is enabled and enforced, but user did not perform 2fa yet!

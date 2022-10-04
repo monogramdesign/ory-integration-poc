@@ -33,7 +33,6 @@ export function AuthProvider({ children }: any) {
         // User has a session!
         const userName = getUserName(data.identity);
         setUser({ email: userName });
-        console.log("dasdad", data);
         // Get logout URL
         return ory
           .createSelfServiceLogoutFlowUrlForBrowsers()

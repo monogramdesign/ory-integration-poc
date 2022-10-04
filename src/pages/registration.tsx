@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { edgeConfig } from "@ory/integrations/next";
 import {
   SelfServiceRegistrationFlow,
-  V0alpha2Api,
-  Configuration,
   SubmitSelfServiceRegistrationFlowBody,
 } from "@ory/client";
 import { Path, useForm, UseFormRegister, SubmitHandler } from "react-hook-form";
 import Form from "../components/Form";
 import { ory } from "../lib/sdk/ory";
-import { handleGetFlowError, handleFlowError } from "../lib/hooks/errors";
+import { handleFlowError } from "../lib/hooks/errors";
 import { AxiosError } from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const Registration = () => {
   const router = useRouter();
@@ -76,12 +74,17 @@ const Registration = () => {
             if (err.response?.status === 400) {
               // Yup, it is!
               setFlow(err.response?.data);
+              toast.error("This email has already been registered");
               return;
             }
 
             return Promise.reject(err);
           })
       );
+
+  if (!flow) {
+    return null;
+  }
 
   const goToLoginPage = () => router.push("/login");
 
@@ -96,6 +99,7 @@ const Registration = () => {
           Sign In
         </button>
       </div>
+      <Toaster />
     </main>
   );
 };

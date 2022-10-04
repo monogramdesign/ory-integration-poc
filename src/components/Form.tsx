@@ -4,7 +4,6 @@ import {
   SelfServiceSettingsFlow,
   SelfServiceVerificationFlow,
   SelfServiceRecoveryFlow,
-  UiNode,
 } from "@ory/client";
 import { useForm } from "react-hook-form";
 
@@ -22,7 +21,6 @@ type Props<T> = {
 const Form = (props: Props<any>) => {
   const { register, handleSubmit } = useForm();
 
-  console.log("flow", props.flow);
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} className="flex flex-col">
       {props.flow?.ui.nodes.map((node: any) => {
@@ -101,12 +99,14 @@ const Form = (props: Props<any>) => {
             case "submit":
               // Render the submit button
               return (
-                <input
-                  type="submit"
+                <button
                   value={node.attributes.value}
                   {...register(node.attributes.name)}
-                  className="order-2 p-3 rounded-md bg-pink-500 text-white text-base"
-                />
+                >
+                  {node.attributes.value === "google"
+                    ? "Google"
+                    : props.buttonTitle}
+                </button>
               );
           }
         }

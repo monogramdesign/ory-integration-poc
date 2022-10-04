@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Form from "../components/Form";
 import { ory } from "../lib/sdk/ory";
 import { handleGetFlowError, handleFlowError } from "../lib/hooks/errors";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login: NextPage = () => {
   const [flow, setFlow] = useState<SelfServiceLoginFlow | undefined>(undefined);
@@ -65,7 +66,7 @@ const Login: NextPage = () => {
       .then(() =>
         ory
           .submitSelfServiceLoginFlow(String(flow?.id), values)
-          // We logged in successfully! Let's bring the user home.
+          // We  in successfully! Let's bring the user home.
           .then((res) => {
             if (flow?.return_to) {
               window.location.href = flow?.return_to;
@@ -73,18 +74,13 @@ const Login: NextPage = () => {
             }
             router.push("/");
           })
-          .then(() => {})
-          .catch()
           .catch((err: AxiosError) => {
             // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
-              // Yup, it is!
               setFlow(err.response?.data);
+              toast.error("Invalid credentials, please try again");
               return;
             }
-            console.log("adsdas", err);
-
-            return Promise.reject(err);
           })
       );
 
@@ -99,6 +95,7 @@ const Login: NextPage = () => {
           Create Account
         </button>
       </div>
+      <Toaster />
     </main>
   );
 };
