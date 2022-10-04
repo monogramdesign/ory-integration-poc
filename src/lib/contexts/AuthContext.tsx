@@ -1,13 +1,16 @@
 import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CurrentUser, AuthContextType } from "../types/user";
-import { Configuration, V0alpha2Api, Identity } from "@ory/client";
+import { Identity } from "@ory/client";
+import { AxiosError } from "axios";
 import { edgeConfig } from "@ory/integrations/next";
 
-const ory = new V0alpha2Api(new Configuration(edgeConfig));
+import { ory } from "../../lib/sdk/ory";
 
 const getUserName = (identity: Identity) =>
-  identity?.traits.email || identity?.traits.username;
+  identity.traits.name
+    ? identity?.traits.name.first + " " + identity?.traits.name.last
+    : identity?.traits.email;
 
 const authContextDefaultValues: AuthContextType = {
   user: undefined,
@@ -30,7 +33,7 @@ export function AuthProvider({ children }: any) {
         // User has a session!
         const userName = getUserName(data.identity);
         setUser({ email: userName });
-
+        console.log("dasdad", data);
         // Get logout URL
         return ory
           .createSelfServiceLogoutFlowUrlForBrowsers()
@@ -39,8 +42,7 @@ export function AuthProvider({ children }: any) {
           });
       })
       .catch(() => {
-        // Redirect to login page
-        return router.push(edgeConfig.basePath + "/self-service/login/browser");
+        return router.push("/login");
       });
   }, [user, router]);
 
