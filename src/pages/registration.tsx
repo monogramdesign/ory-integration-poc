@@ -4,7 +4,6 @@ import {
   SelfServiceRegistrationFlow,
   SubmitSelfServiceRegistrationFlowBody,
 } from "@ory/client";
-import { Path, useForm, UseFormRegister, SubmitHandler } from "react-hook-form";
 import Form from "../components/Form";
 import { ory } from "../lib/sdk/ory";
 import { handleFlowError } from "../lib/hooks/errors";
@@ -13,7 +12,6 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Registration = () => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
 
   // The "flow" represents a registration process and contains
   // information about the form we need to render (e.g. username + password)

@@ -41,13 +41,10 @@ export function AuthProvider({ children }: any) {
           });
       })
       .catch(() => {
-        return router.push("/login");
+        console.log("anything");
+        if (router.pathname !== "/login") return router.push("/login");
       });
   }, [user, router]);
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <AuthContext.Provider
