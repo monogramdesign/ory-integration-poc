@@ -44,9 +44,9 @@ export function AuthProvider({ children }: any) {
         if (
           !(router.pathname === "/login" || router.pathname === "/registration")
         ) {
-          setLoading(false);
           return router.push("/login");
         }
+        setLoading(false);
       });
   }, [user, router]);
 
