@@ -1,13 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CurrentUser, AuthContextType } from "../types/user";
-import { Configuration, V0alpha2Api, Identity } from "@ory/client";
-import { edgeConfig } from "@ory/integrations/next";
+import { Identity } from "@ory/client";
 
-const ory = new V0alpha2Api(new Configuration(edgeConfig));
+import { ory } from "../../lib/sdk/ory";
 
 const getUserName = (identity: Identity) =>
-  identity?.traits.email || identity?.traits.username;
+  identity.traits.name
+    ? identity?.traits.name.first + " " + identity?.traits.name.last
+    : identity?.traits.email;
 
 const authContextDefaultValues: AuthContextType = {
   user: undefined,
@@ -22,6 +23,7 @@ export function AuthProvider({ children }: any) {
   const router = useRouter();
   const [user, setUser] = useState<CurrentUser>();
   const [logoutUrl, setLogoutUrl] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     ory
@@ -30,6 +32,7 @@ export function AuthProvider({ children }: any) {
         // User has a session!
         const userName = getUserName(data.identity);
         setUser({ email: userName });
+        setLoading(false);
 
         // Get logout URL
         return ory
@@ -39,13 +42,17 @@ export function AuthProvider({ children }: any) {
           });
       })
       .catch(() => {
-        // Redirect to login page
-        return router.push(edgeConfig.basePath + "/self-service/login/browser");
+        if (
+          !(router.pathname === "/login" || router.pathname === "/registration")
+        ) {
+          return router.push("/login");
+        }
+        setLoading(false);
       });
   }, [user, router]);
 
-  if (!user) {
-    return null;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (

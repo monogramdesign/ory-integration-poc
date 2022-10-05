@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-const Footer = () => {
+const Header = () => {
   return (
-    <footer className="p-2 lg:p-4 lg:absolute lg:bottom-0">
+    <footer className="p-2 lg:p-4">
       <a
         href="https://www.ory.sh/docs/welcome"
         target="_blank"
@@ -16,4 +16,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Header;

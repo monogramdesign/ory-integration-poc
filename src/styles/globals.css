@@ -8,6 +8,9 @@
         background-color: #f8f8f8;
     }
     button {
-        @apply border-2 p-3 rounded-md bg-pink-500 text-white text-base
+        @apply p-3 rounded-md bg-pink-500 text-white text-base
+    }
+    input {
+        @apply border-2 px-3 py-1 rounded-md my-3
     }
 }
