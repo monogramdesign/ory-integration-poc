@@ -13,7 +13,7 @@ const Profile = () => {
     router.push(edgeConfig.basePath + "/self-service/settings/browser");
 
   //Home
-  const goToHome = () => router.back();
+  const goToHome = () => router.push("/");
 
   return (
     <main className=" p-2 lg:px-80 lg:py-10">

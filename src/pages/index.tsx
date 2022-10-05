@@ -5,7 +5,6 @@ import useAuth from "../lib/hooks/useAuth";
 const Home = () => {
   //get current user info
   const { user, logoutUrl } = useAuth();
-
   const router = useRouter();
 
   //Profile
@@ -14,6 +13,9 @@ const Home = () => {
   //Verification Account
   const goToVerificationAccount = () =>
     router.push(edgeConfig.basePath + "/self-service/verification/browser");
+
+  //Products
+  const goToProducts = () => router.push("/products");
 
   return (
     <main className=" p-2 lg:px-80 lg:py-10">
@@ -43,6 +45,8 @@ const Home = () => {
         </div>
 
         <div className="grid grid-rows-2 justify-center text-center gap-2">
+          <button onClick={goToProducts}>Products</button>
+
           <button onClick={goToProfileInfo}>Profile info</button>
 
           <button onClick={goToVerificationAccount}>
