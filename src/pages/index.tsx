@@ -42,7 +42,7 @@ const Home = () => {
           </a>
         </div>
 
-        <div className="grid grid-rows-2 justify-center text-center">
+        <div className="grid grid-rows-2 justify-center text-center gap-2">
           <button onClick={goToProfileInfo}>Profile info</button>
 
           <button onClick={goToVerificationAccount}>
