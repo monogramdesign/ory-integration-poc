@@ -36,7 +36,7 @@ const Form = (props: Props<any>) => {
                 />
               );
             case "text":
-              // Render a hidden input field
+              // Render a First Name and Last Name input field
               if (node.attributes.name === "traits.name.first") {
                 return (
                   <div className="flex flex-col">
@@ -73,7 +73,7 @@ const Form = (props: Props<any>) => {
               }
 
             case "email":
-              // Render a hidden input field
+              // Render a email input field
               return (
                 <div className="flex flex-col">
                   <label>Email:</label>
@@ -85,7 +85,7 @@ const Form = (props: Props<any>) => {
                 </div>
               );
             case "password":
-              // Render a hidden input field
+              // Render a password input field
               return (
                 <div className="flex flex-col">
                   <label>Password:</label>

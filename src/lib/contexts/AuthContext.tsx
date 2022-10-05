@@ -2,8 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CurrentUser, AuthContextType } from "../types/user";
 import { Identity } from "@ory/client";
-import { AxiosError } from "axios";
-import { edgeConfig } from "@ory/integrations/next";
 
 import { ory } from "../../lib/sdk/ory";
 
