@@ -23,6 +23,7 @@ export function AuthProvider({ children }: any) {
   const router = useRouter();
   const [user, setUser] = useState<CurrentUser>();
   const [logoutUrl, setLogoutUrl] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     ory
@@ -37,12 +38,21 @@ export function AuthProvider({ children }: any) {
           .then(({ data }) => {
             setLogoutUrl(data.logout_url);
           });
+        setLoading(false);
       })
       .catch(() => {
-        console.log("anything");
-        if (router.pathname !== "/login") return router.push("/login");
+        if (
+          !(router.pathname === "/login" || router.pathname === "/registration")
+        ) {
+          setLoading(false);
+          return router.push("/login");
+        }
       });
   }, [user, router]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider
