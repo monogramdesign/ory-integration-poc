@@ -1,8 +1,8 @@
 export type CurrentUser = {
-  email: string;
-};
+  email: string
+}
 
 export type AuthContextType = {
-  user: CurrentUser | undefined;
-  logoutUrl: string | undefined;
-};
+  user: CurrentUser | undefined
+  logoutUrl: string | undefined
+}

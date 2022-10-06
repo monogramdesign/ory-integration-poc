@@ -1,19 +1,19 @@
-import { useRouter } from "next/router";
-import { edgeConfig } from "@ory/integrations/next";
-import useAuth from "../lib/hooks/useAuth";
+import { useRouter } from 'next/router'
+import { edgeConfig } from '@ory/integrations/next'
+import useAuth from '../lib/hooks/useAuth'
 
 const Profile = () => {
   //get current user info
-  const { user } = useAuth();
+  const { user } = useAuth()
 
-  const router = useRouter();
+  const router = useRouter()
 
   //Account settings
   const goToAccountSettings = () =>
-    router.push(edgeConfig.basePath + "/self-service/settings/browser");
+    router.push(edgeConfig.basePath + '/self-service/settings/browser')
 
   //Home
-  const goToHome = () => router.push("/");
+  const goToHome = () => router.push('/')
 
   return (
     <main className=" p-2 lg:px-80 lg:py-10">
@@ -29,7 +29,7 @@ const Profile = () => {
         </div>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

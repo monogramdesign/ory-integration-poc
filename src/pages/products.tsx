@@ -1,13 +1,12 @@
 import {
   useGetProducts,
   useGetProductsByCategory,
-  useAddProduct,
-  GET_PRODUCTS,
-} from "../lib/apollo/hooks/useProducts";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import AddProductsModal from "../components/AddProductModal";
-import toast, { Toaster } from "react-hot-toast";
+  useAddProduct
+} from '../lib/apollo/hooks/useProducts'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import AddProductsModal from '../components/AddProductModal'
+import toast, { Toaster } from 'react-hot-toast'
 
 const ProductsList = ({ products }: any) => {
   return products ? (
@@ -19,32 +18,32 @@ const ProductsList = ({ products }: any) => {
     ))
   ) : (
     <p>No Products</p>
-  );
-};
+  )
+}
 
 const Products = () => {
   //TODO Add New Product
-  const router = useRouter();
+  const router = useRouter()
 
   //Get Products
-  const { products, isLoading, isError } = useGetProducts();
-  const { productsByCategory } = useGetProductsByCategory(3);
-  const { addProduct } = useAddProduct();
+  const { products, isLoading, isError } = useGetProducts()
+  const { productsByCategory } = useGetProductsByCategory(3)
+  const { addProduct } = useAddProduct()
 
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false)
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error :(</p>;
+  if (isLoading) return <p>Loading...</p>
+  if (isError) return <p>Error :(</p>
 
   //Home
-  const goToHome = () => router.push("/");
+  const goToHome = () => router.push('/')
 
   //Add Products Modal
-  const showAddProductsModal = () => setShowModal(!showModal);
+  const showAddProductsModal = () => setShowModal(!showModal)
 
   //Add Product
   const addNewProduct = async (values: any) => {
-    const randomId = Math.floor(Math.random() * 3);
+    const randomId = Math.floor(Math.random() * 3)
 
     try {
       await addProduct({
@@ -52,16 +51,16 @@ const Products = () => {
           name: values.name,
           price: parseFloat(values.price),
           category: {
-            id: parseInt(values.categoryId),
-          },
-        },
-      });
-      toast.success("New product created!");
-      setShowModal(false);
+            id: parseInt(values.categoryId)
+          }
+        }
+      })
+      toast.success('New product created!')
+      setShowModal(false)
     } catch (e) {
-      toast.error("An error has occurred! Please try again.");
+      toast.error('An error has occurred! Please try again.')
     }
-  };
+  }
 
   return (
     <main className=" p-2 lg:px-80 lg:py-10">
@@ -73,9 +72,7 @@ const Products = () => {
           </div>
 
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-blue-700 pb-5">
-              Products Category 3
-            </h1>
+            <h1 className="text-2xl font-bold text-blue-700 pb-5">Products Category 3</h1>
             <ProductsList products={productsByCategory} />
           </div>
         </div>
@@ -92,7 +89,7 @@ const Products = () => {
       )}
       <Toaster />
     </main>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
