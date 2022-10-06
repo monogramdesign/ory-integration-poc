@@ -1,4 +1,5 @@
 import { gql, useQuery, useMutation } from "@apollo/client";
+import { client } from "../../sdk/apollo";
 
 export const GET_PRODUCTS = gql`
   query ExampleQuery {
@@ -57,7 +58,10 @@ const ADD_PRODUCTS = gql`
 `;
 
 export const useAddProduct = () => {
-  const [addProduct, { data, loading, error }] = useMutation(ADD_PRODUCTS);
+  const [addProduct, { loading, error }] = useMutation(ADD_PRODUCTS);
+  client.refetchQueries({
+    include: [GET_PRODUCTS, GET_PRODUCTS_BY_CATEGORY],
+  });
 
   return {
     addProduct: addProduct,

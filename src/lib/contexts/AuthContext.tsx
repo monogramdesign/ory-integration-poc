@@ -49,7 +49,7 @@ export function AuthProvider({ children }: any) {
         }
         setLoading(false);
       });
-  }, [user, router]);
+  }, [router]);
 
   if (loading) {
     return <div>Loading...</div>;
