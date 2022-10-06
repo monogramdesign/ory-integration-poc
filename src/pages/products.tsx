@@ -1,12 +1,12 @@
-import {
-  useGetProducts,
-  useGetProductsByCategory,
-  useAddProduct
-} from '../lib/apollo/hooks/useProducts'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import AddProductsModal from '../components/AddProductModal'
+import AddProductsModal from '@/components/AddProductModal'
 import toast, { Toaster } from 'react-hot-toast'
+import Link from 'next/link'
+
+import { useProducts } from '@/lib/apollo/hooks/useProducts'
+import { useGetProductsByCategory } from '@/lib/apollo/hooks/useGetProductsByCategory'
+import { useAddProduct } from '@/lib/apollo/hooks/useAddProduct'
 
 const ProductsList = ({ products }: any) => {
   return products ? (
@@ -26,7 +26,7 @@ const Products = () => {
   const router = useRouter()
 
   //Get Products
-  const { products, isLoading, isError } = useGetProducts()
+  const { products, isLoading, isError } = useProducts()
   const { productsByCategory } = useGetProductsByCategory(3)
   const { addProduct } = useAddProduct()
 
@@ -35,16 +35,11 @@ const Products = () => {
   if (isLoading) return <p>Loading...</p>
   if (isError) return <p>Error :(</p>
 
-  //Home
-  const goToHome = () => router.push('/')
-
   //Add Products Modal
   const showAddProductsModal = () => setShowModal(!showModal)
 
   //Add Product
   const addNewProduct = async (values: any) => {
-    const randomId = Math.floor(Math.random() * 3)
-
     try {
       await addProduct({
         variables: {
@@ -78,7 +73,9 @@ const Products = () => {
         </div>
         <div className="justify-center text-center grid grid-rows-2 gap-2 my-10">
           <button onClick={showAddProductsModal}>Add Product</button>
-          <button onClick={goToHome}>Go Back</button>
+          <Link href="/">
+            <a className="link-button">Go Back</a>
+          </Link>
         </div>
       </div>
       {showModal && (

@@ -18,7 +18,7 @@ type Props<T> = {
     | SelfServiceRecoveryFlow
 }
 
-const Form = (props: Props<any>) => {
+const LoginForm = (props: Props<any>) => {
   const { register, handleSubmit } = useForm()
 
   return (
@@ -37,28 +37,12 @@ const Form = (props: Props<any>) => {
               )
             case 'text':
               // Render a First Name and Last Name input field
-              if (node.attributes.name === 'traits.name.first') {
-                return (
-                  <div className="flex flex-col">
-                    <label>First Name:</label>
-                    <input {...register(node.attributes.name)} type="text" required />
-                  </div>
-                )
-              } else if (node.attributes.name === 'traits.name.last') {
-                return (
-                  <div className="flex flex-col">
-                    <label>Last Name:</label>
-                    <input {...register(node.attributes.name)} type="text" required />
-                  </div>
-                )
-              } else {
-                return (
-                  <div className="flex flex-col">
-                    <label>Email:</label>
-                    <input {...register(node.attributes.name)} type="email" required />
-                  </div>
-                )
-              }
+              return (
+                <div className="flex flex-col">
+                  <label>{node.meta.label.text}:</label>
+                  <input {...register(node.attributes.name)} type="text" required />
+                </div>
+              )
 
             case 'email':
               // Render a email input field
@@ -90,4 +74,4 @@ const Form = (props: Props<any>) => {
   )
 }
 
-export default Form
+export default LoginForm

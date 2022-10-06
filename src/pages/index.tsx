@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import { edgeConfig } from '@ory/integrations/next'
-import useAuth from '../lib/hooks/useAuth'
+import Link from 'next/link'
+
+import useAuth from '@/lib/hooks/useAuth'
 
 const Home = () => {
   //get current user info
@@ -44,12 +46,15 @@ const Home = () => {
         </div>
 
         <div className="grid grid-rows-2 justify-center text-center gap-2">
-          <button onClick={goToProducts}>Products</button>
-
-          <button onClick={goToProfileInfo}>Profile info</button>
-
-          <button onClick={goToVerificationAccount}>Verification Account</button>
-
+          <Link href="/products">
+            <a className="link-button">Products</a>
+          </Link>
+          <Link href="/profile">
+            <a className="link-button">Profile info</a>
+          </Link>
+          <Link href={edgeConfig.basePath + '/self-service/verification/browser'}>
+            <a className="link-button">Verification Account</a>
+          </Link>
           <a
             className="border-2 p-3 rounded-md bg-pink-500 text-white text-base"
             data-testid="logout"

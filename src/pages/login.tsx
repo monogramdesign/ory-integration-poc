@@ -1,14 +1,14 @@
-import { SelfServiceLoginFlow } from '@ory/client'
-import { AxiosError } from 'axios'
-import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Form from '../components/Form'
-import { ory } from '../lib/sdk/ory'
-import { handleGetFlowError, handleFlowError } from '../lib/hooks/errors'
+import { SelfServiceLoginFlow } from '@ory/client'
+import { useRouter } from 'next/router'
 import toast, { Toaster } from 'react-hot-toast'
+import Link from 'next/link'
 
-const Login: NextPage = () => {
+import { ory } from '@/lib/sdk/ory'
+import { handleGetFlowError, handleFlowError } from '@/lib/hooks/errors'
+import LoginForm from '@/components/LoginForm'
+
+const Login = () => {
   const [flow, setFlow] = useState<SelfServiceLoginFlow | undefined>(undefined)
 
   // Get ?flow=... from the URL
@@ -21,7 +21,7 @@ const Login: NextPage = () => {
     refresh,
     // AAL = Authorization Assurance Level. This implies that we want to upgrade the AAL, meaning that we want
     // to perform two-factor authentication/verification.
-    aal
+    authorization_assurance_level
   } = router.query
 
   useEffect(() => {
@@ -45,14 +45,14 @@ const Login: NextPage = () => {
     ory
       .initializeSelfServiceLoginFlowForBrowsers(
         Boolean(refresh),
-        aal ? String(aal) : undefined,
+        authorization_assurance_level ? String(authorization_assurance_level) : undefined,
         returnTo ? String(returnTo) : undefined
       )
       .then(({ data }) => {
         setFlow(data)
       })
       .catch(handleFlowError(router, 'login', setFlow))
-  }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
+  }, [flowId, router, authorization_assurance_level, refresh, returnTo, flow])
 
   if (!flow) {
     return null
@@ -74,7 +74,7 @@ const Login: NextPage = () => {
             }
             router.push('/')
           })
-          .catch((err: AxiosError) => {
+          .catch((err: any) => {
             // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
               setFlow(err.response?.data)
@@ -84,16 +84,16 @@ const Login: NextPage = () => {
           })
       )
 
-  const goToRegistrationPage = () => router.push('/registration')
-
   return (
     <main className=" p-2 lg:px-80 lg:py-10">
       <div className="border-2 rounded-md p-10 lg:p-20 bg-white">
         <div className="text-center text-2xl text-pink-500 mb-10">Sign In</div>
-        <Form onSubmit={onSubmit} buttonTitle={'Sign In'} flow={flow} />
-        <button className="mt-10 w-full" onClick={goToRegistrationPage}>
-          Create Account
-        </button>
+        <LoginForm onSubmit={onSubmit} buttonTitle={'Sign In'} flow={flow} />
+        <div className="link-button w-full text-center">
+          <Link href="/registration">
+            <a>Create Account</a>
+          </Link>
+        </div>
       </div>
       <Toaster />
     </main>

@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { CurrentUser, AuthContextType } from '../types/user'
 import { Identity } from '@ory/client'
 
-import { ory } from '../../lib/sdk/ory'
+import { CurrentUser, AuthContextType } from '@/lib/types/user'
+import { ory } from '@/lib/sdk/ory'
 
 const getUserName = (identity: Identity) =>
   identity.traits.name

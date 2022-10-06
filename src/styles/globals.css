@@ -14,3 +14,9 @@
         @apply border-2 px-3 py-1 rounded-md my-3
     }
 }
+
+@layer components {
+    .link-button {
+        @apply p-3 rounded-md bg-pink-500 text-white text-base mt-2
+    }
+}

@@ -1,10 +1,12 @@
-import '../styles/globals.css'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-import Header from '../components/Header'
-import { AuthProvider } from '../lib/contexts/AuthContext'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { client } from '../lib/sdk/apollo'
+import { ApolloProvider } from '@apollo/client'
+
+import Header from '@/components/Header'
+import { AuthProvider } from '@/lib/contexts/AuthContext'
+import { client } from '@/lib/sdk/apollo'
+
+import '@/styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

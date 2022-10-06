@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { SelfServiceRegistrationFlow, SubmitSelfServiceRegistrationFlowBody } from '@ory/client'
-import Form from '../components/Form'
-import { ory } from '../lib/sdk/ory'
-import { handleFlowError } from '../lib/hooks/errors'
-import { AxiosError } from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
+import Link from 'next/link'
+
+import { ory } from '@/lib/sdk/ory'
+import { handleFlowError } from '@/lib/hooks/errors'
+import LoginForm from '@/components/LoginForm'
 
 const Registration = () => {
   const router = useRouter()
@@ -62,7 +63,7 @@ const Registration = () => {
             return router.push(flow?.return_to || '/').then(() => {})
           })
           .catch(handleFlowError(router, 'registration', setFlow))
-          .catch((err: AxiosError) => {
+          .catch((err: any) => {
             // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
               // Yup, it is!
@@ -85,10 +86,12 @@ const Registration = () => {
     <main className=" p-2 lg:px-80 lg:py-10">
       <div className="border-2 rounded-md p-10 lg:p-20 bg-white">
         <div className="text-center text-2xl text-pink-500 mb-10">Create Account</div>
-        <Form onSubmit={onSubmit} buttonTitle={'Create Account'} flow={flow} />
-        <button className="mt-10 w-full" onClick={goToLoginPage}>
-          Sign In
-        </button>
+        <LoginForm onSubmit={onSubmit} buttonTitle={'Create Account'} flow={flow} />
+        <div className="link-button w-full text-center">
+          <Link href="/login">
+            <a>Sign In</a>
+          </Link>
+        </div>
       </div>
       <Toaster />
     </main>
