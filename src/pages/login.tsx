@@ -1,18 +1,18 @@
-import { SelfServiceLoginFlow } from "@ory/client";
-import { AxiosError } from "axios";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Form from "../components/Form";
-import { ory } from "../lib/sdk/ory";
-import { handleGetFlowError, handleFlowError } from "../lib/hooks/errors";
-import toast, { Toaster } from "react-hot-toast";
+import { SelfServiceLoginFlow } from '@ory/client'
+import { AxiosError } from 'axios'
+import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import Form from '../components/Form'
+import { ory } from '../lib/sdk/ory'
+import { handleGetFlowError, handleFlowError } from '../lib/hooks/errors'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Login: NextPage = () => {
-  const [flow, setFlow] = useState<SelfServiceLoginFlow | undefined>(undefined);
+  const [flow, setFlow] = useState<SelfServiceLoginFlow | undefined>(undefined)
 
   // Get ?flow=... from the URL
-  const router = useRouter();
+  const router = useRouter()
   const {
     return_to: returnTo,
     flow: flowId,
@@ -21,13 +21,13 @@ const Login: NextPage = () => {
     refresh,
     // AAL = Authorization Assurance Level. This implies that we want to upgrade the AAL, meaning that we want
     // to perform two-factor authentication/verification.
-    aal,
-  } = router.query;
+    aal
+  } = router.query
 
   useEffect(() => {
     // If the router is not ready yet, or we already have a flow, do nothing.
     if (!router.isReady || flow) {
-      return;
+      return
     }
 
     // If ?flow=.. was in the URL, we fetch it
@@ -35,10 +35,10 @@ const Login: NextPage = () => {
       ory
         .getSelfServiceLoginFlow(String(flowId))
         .then(({ data }) => {
-          setFlow(data);
+          setFlow(data)
         })
-        .catch(handleGetFlowError(router, "login", setFlow));
-      return;
+        .catch(handleGetFlowError(router, 'login', setFlow))
+      return
     }
 
     // Otherwise we initialize it
@@ -49,13 +49,13 @@ const Login: NextPage = () => {
         returnTo ? String(returnTo) : undefined
       )
       .then(({ data }) => {
-        setFlow(data);
+        setFlow(data)
       })
-      .catch(handleFlowError(router, "login", setFlow));
-  }, [flowId, router, router.isReady, aal, refresh, returnTo, flow]);
+      .catch(handleFlowError(router, 'login', setFlow))
+  }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
 
   if (!flow) {
-    return null;
+    return null
   }
 
   const onSubmit = (values: any) =>
@@ -69,35 +69,35 @@ const Login: NextPage = () => {
           // We  in successfully! Let's bring the user home.
           .then((res) => {
             if (flow?.return_to) {
-              window.location.href = flow?.return_to;
-              return;
+              window.location.href = flow?.return_to
+              return
             }
-            router.push("/");
+            router.push('/')
           })
           .catch((err: AxiosError) => {
             // If the previous handler did not catch the error it's most likely a form validation error
             if (err.response?.status === 400) {
-              setFlow(err.response?.data);
-              toast.error("Invalid credentials, please try again");
-              return;
+              setFlow(err.response?.data)
+              toast.error('Invalid credentials, please try again')
+              return
             }
           })
-      );
+      )
 
-  const goToRegistrationPage = () => router.push("/registration");
+  const goToRegistrationPage = () => router.push('/registration')
 
   return (
     <main className=" p-2 lg:px-80 lg:py-10">
       <div className="border-2 rounded-md p-10 lg:p-20 bg-white">
         <div className="text-center text-2xl text-pink-500 mb-10">Sign In</div>
-        <Form onSubmit={onSubmit} buttonTitle={"Sign In"} flow={flow} />
+        <Form onSubmit={onSubmit} buttonTitle={'Sign In'} flow={flow} />
         <button className="mt-10 w-full" onClick={goToRegistrationPage}>
           Create Account
         </button>
       </div>
       <Toaster />
     </main>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

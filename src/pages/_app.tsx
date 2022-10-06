@@ -1,8 +1,10 @@
-import "../styles/globals.css";
-import Head from "next/head";
-import type { AppProps } from "next/app";
-import Header from "../components/Header";
-import { AuthProvider } from "../lib/contexts/AuthContext";
+import '../styles/globals.css'
+import Head from 'next/head'
+import type { AppProps } from 'next/app'
+import Header from '../components/Header'
+import { AuthProvider } from '../lib/contexts/AuthContext'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { client } from '../lib/sdk/apollo'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,10 +16,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Header />
       <AuthProvider>
-        <Component {...pageProps} />
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
       </AuthProvider>
     </div>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
