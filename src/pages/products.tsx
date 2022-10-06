@@ -74,7 +74,7 @@ const Products = () => {
 
           <div className="text-center">
             <h1 className="text-2xl font-bold text-blue-700 pb-5">
-              Products by Category
+              Products Category 3
             </h1>
             <ProductsList products={productsByCategory} />
           </div>
