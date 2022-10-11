@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
-  query ExampleQuery($categoryId: Int!) {
+  query ProductsByCategoryQuery($categoryId: Int!) {
     productsByCategory(categoryId: $categoryId) {
       id
       name

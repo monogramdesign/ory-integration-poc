@@ -2,10 +2,33 @@ import { edgeConfig } from '@ory/integrations/next'
 import Link from 'next/link'
 
 import useAuth from '@/lib/hooks/useAuth'
+import { useCurrentUser } from '@/lib/apollo/hooks/useCurrentUser'
+import { useRouter } from 'next/router'
 
 const Profile = () => {
+  const router = useRouter()
   //get current user info
-  const { user } = useAuth()
+  const { user, logoutUrl } = useAuth()
+  const { currentUser, client } = useCurrentUser()
+
+  if (currentUser) {
+    return (
+      <span>
+        <p className="navbar-text navbar-right">
+          {currentUser.login}
+          &nbsp;
+          <button
+            onClick={() => {
+              // call your auth logout code then reset store
+              router.push(logoutUrl!).then(() => client.resetStore())
+            }}
+          >
+            Log out
+          </button>
+        </p>
+      </span>
+    )
+  }
 
   return (
     <main className=" p-2 lg:px-80 lg:py-10">

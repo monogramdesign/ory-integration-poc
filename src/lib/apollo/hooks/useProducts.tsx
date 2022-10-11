@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 
 export const GET_PRODUCTS = gql`
-  query ExampleQuery {
+  query ProductsQuery {
     allProducts {
       id
       name

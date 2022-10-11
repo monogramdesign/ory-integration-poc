@@ -1,8 +1,24 @@
-//import Apollo Client
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 
-//Initialize Apollo Client
+const httpLink = createHttpLink({
+  uri: 'https://rt-apollo-prisma-staging.up.railway.app/'
+})
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token')
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  }
+})
+
+//Generate Apollo Client
 export const client = new ApolloClient({
-  uri: 'https://rt-apollo-prisma-staging.up.railway.app/',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 })
